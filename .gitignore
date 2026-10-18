@@ -1,0 +1,38 @@
+# Environment & Local Configuration
+.env
+.env.local
+.env.*.local
+
+# Operating System Files
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.DS_Store
+._*
+
+# IDE & Code Editor Configurations
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+*.swp
+*.swo
+
+# Server Logs & Temporary Files
+*.log
+error_log
+access_log
+*.tmp
+*.bak
+*.temp
+
+# Dependencies (if used in future)
+/vendor/
+/node_modules/
+
+# Archives & Backups
+*.zip
+*.tar.gz
+*.rar
+*.7z

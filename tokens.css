@@ -1,0 +1,89 @@
+:root {
+  color-scheme: light;
+
+  --font-display: "Big Shoulders Display", "Anton", "Arial Black", ui-sans-serif, sans-serif;
+  --font-body:    "DM Sans", system-ui, -apple-system, sans-serif;
+  --font-label:   "JetBrains Mono", ui-monospace, monospace;
+
+  --text-xs:        0.75rem;
+  --text-sm:        0.875rem;
+  --text-base:      1rem;
+  --text-md:        1.125rem;
+  --text-lg:        1.375rem;
+  --text-xl:        1.875rem;
+  --text-2xl:       2.5rem;
+  --text-3xl:       3.5rem;
+  --text-marquee:   clamp(3.5rem, 9vw + 1rem, 8.5rem);
+  --text-display:   clamp(2.5rem, 6vw + 0.5rem, 5rem);
+  --text-display-s: clamp(1.75rem, 3.5vw + 0.5rem, 3rem);
+
+  --display-weight:  800;
+  --display-width:   110;
+  --display-style:   normal;
+
+  --lh-tight:   0.88;
+  --lh-snug:    1.05;
+  --lh-normal:  1.42;
+  --lh-relaxed: 1.58;
+
+  --tracking-display: 0.035em;
+  --tracking-tight:   -0.01em;
+  --tracking-normal:  0;
+  --tracking-label:   0.16em;
+
+  --color-paper:      oklch(92%  0.045 50);
+  --color-paper-2:    oklch(88%  0.050 45);
+  --color-paper-3:    oklch(82%  0.060 40);
+  --color-rule:       oklch(40%  0.18  25);
+  --color-rule-2:     oklch(18%  0.08  20);
+  --color-muted:      oklch(45%  0.05  30);
+  --color-neutral:    oklch(35%  0.06  25);
+  --color-ink-2:      oklch(28%  0.060 25);
+  --color-ink:        oklch(18%  0.080 20);
+  
+  --color-accent:     oklch(86%  0.18  95);
+  --color-accent-2:   oklch(40%  0.21  25);
+  --color-accent-ink: oklch(18%  0.080 20);
+  
+  --color-success:    oklch(65%  0.18  145);
+  --color-warning:    oklch(75%  0.18  75);
+  --color-danger:     oklch(45%  0.22  28);
+  --color-focus:      oklch(40%  0.21  25);
+
+  --space-3xs: 0.125rem;
+  --space-2xs: 0.25rem;
+  --space-xs:  0.5rem;
+  --space-sm:  0.75rem;
+  --space-md:  1rem;
+  --space-lg:  1.5rem;
+  --space-xl:  2.25rem;
+  --space-2xl: 3.5rem;
+  --space-3xl: 5rem;
+
+  --page-max:    86rem;
+  --page-gutter: clamp(1rem, 3vw, 2.25rem);
+
+  --rule-hair:   1px;
+  --rule-fine:   2px;
+  --border-thick: 2px solid var(--color-ink);
+  --border-heavy: 3px solid var(--color-ink);
+  
+  --radius-sm:   3px;
+  --radius-card: 6px;
+  --radius-pill: 999px;
+  
+  --shadow-sm:   2px 2px 0 var(--color-ink);
+  --shadow-card: 4px 4px 0 var(--color-ink);
+  --shadow-card-hover: 7px 7px 0 var(--color-accent-2);
+  --shadow-heavy: 6px 6px 0 var(--color-ink);
+
+  --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-micro:   120ms;
+  --dur-short:   220ms;
+  --dur-marquee: 34s;
+
+  --z-base:       1;
+  --z-sidebar:    100;
+  --z-sticky-nav: 300;
+  --z-modal:      1000;
+}
