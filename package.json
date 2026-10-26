@@ -1,0 +1,9 @@
+{
+  "name": "core-flow-store",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Sistem Informasi Manajemen Ritel & Inventori Toko",
+  "engines": {
+    "node": "22.x"
+  }
+}

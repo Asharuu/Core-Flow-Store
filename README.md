@@ -26,7 +26,8 @@ Sistem Informasi Manajemen Ritel & Inventori Toko berbasis PHP Native dan MariaD
 
 ```text
 Core-Flow-Store/
-├── config/             # Konfigurasi koneksi PDO MariaDB
+├── api/                # Router Serverless Function untuk Vercel
+├── config/             # Konfigurasi koneksi PDO MariaDB & Cloud DB
 ├── database/           # Berkas DDL, DML, View, dan Diagram ERD
 ├── includes/           # Komponen layout (Header, Sidebar, Footer)
 ├── index.php           # Dashboard utama
@@ -38,6 +39,10 @@ Core-Flow-Store/
 ├── vendor.php          # Manajemen data vendor (mengonsumsi VIEW v_vendor)
 ├── margin-penjualan.php# Pengaturan margin keuntungan (mengonsumsi VIEW v_margin_penjualan)
 ├── login.php           # Autentikasi pengguna
+├── tambah-role.php     # Endpoint tambah role dinamis
+├── switch-role.php     # Endpoint peralihan peran
+├── vercel.json         # Konfigurasi runtime PHP & routing Vercel
+├── package.json        # Pengaturan engine Node 22 Vercel
 ├── tokens.css          # Desain sistem & variabel tema (Carnival-01)
 └── styles.css          # Gaya visual antarmuka
 ```
@@ -60,3 +65,20 @@ Core-Flow-Store/
    http://localhost/Core-Flow-Store
    ```
 6. Masuk menggunakan salah satu akun uji coba (misal: `admin_utama` / `admin123`) atau gunakan tombol chip akun di halaman login.
+
+---
+
+## ☁️ Panduan Deployment ke Vercel
+
+1. **Siapkan Database MySQL Cloud Gratis** (misal: [TiDB Serverless](https://tidbcloud.com/) atau [Aiven for MySQL](https://aiven.io/)):
+   - Buat database baru dan import berkas `database/proyek_pbd_uts.sql` serta `database/DDL2 Projek PBD.sql`.
+2. **Hubungkan Repositori GitHub ke Vercel**:
+   - Buka [dashboard Vercel](https://vercel.com/) &rarr; **Add New Project**.
+   - Pilih repositori `Asharuu/Core-Flow-Store`.
+3. **Tambahkan Environment Variables di Vercel** (*Settings &rarr; Environment Variables*):
+   - `DB_HOST`: Host database cloud Anda
+   - `DB_PORT`: `3306` (atau port provider)
+   - `DB_NAME`: Nama database cloud Anda
+   - `DB_USER`: Username database cloud
+   - `DB_PASS`: Password database cloud
+4. Klik **Deploy**. Vercel akan otomatis mendeteksi konfigurasi `vercel.json` dan menjalankan aplikasi melalui runtime serverless PHP.
