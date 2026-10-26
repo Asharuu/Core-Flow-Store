@@ -8,7 +8,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $password = trim($_POST['password'] ?? '');
 
     if ($username && $password) {
-        $stmt = $pdo->prepare("SELECT u.*, r.nama_role FROM user u LEFT JOIN role r ON u.idrole = r.idrole WHERE u.username = ? AND u.password = ?");
+        $stmt = $pdo->prepare("
+            SELECT vu.id AS iduser, vu.`nama user` AS username, vu.password, vu.`id role` AS idrole, vr.nama AS nama_role
+            FROM v_user vu
+            LEFT JOIN v_role vr ON vu.`id role` = vr.id
+            WHERE vu.`nama user` = ? AND vu.password = ?
+        ");
         $stmt->execute([$username, $password]);
         $user = $stmt->fetch();
 

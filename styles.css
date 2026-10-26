@@ -683,3 +683,77 @@ button, input, select, textarea {
   from { transform: translateX(50px); opacity: 0; }
   to { transform: translateX(0); opacity: 1; }
 }
+
+/* Sidebar Role Switcher & Dropdown Tambah Role (Kiri Bawah) */
+.sidebar-role-panel {
+  margin-top: var(--space-md);
+  border-top: 2px dashed var(--color-rule);
+  padding-top: var(--space-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.sidebar-role-select {
+  width: 100%;
+  background: var(--color-paper);
+  color: var(--color-ink);
+  border: 2px solid var(--color-ink);
+  padding: 0.5rem 0.6rem;
+  font-family: var(--font-label);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 2px 2px 0 var(--color-accent);
+  transition: all var(--dur-micro);
+}
+
+.sidebar-role-select:hover,
+.sidebar-role-select:focus {
+  transform: translate(-1px, -1px);
+  box-shadow: 3px 3px 0 var(--color-accent);
+  outline: none;
+}
+
+.dropdown-tambah-role {
+  background: var(--color-paper-2);
+  border: 2px solid var(--color-ink);
+  box-shadow: 2px 2px 0 var(--color-ink);
+  transition: all var(--dur-micro);
+}
+
+.dropdown-tambah-role[open] {
+  box-shadow: 3px 3px 0 var(--color-accent-2);
+}
+
+.dropdown-tambah-role summary {
+  cursor: pointer;
+  font-family: var(--font-label);
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0.45rem 0.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  user-select: none;
+  list-style: none;
+}
+
+.dropdown-tambah-role summary::-webkit-details-marker {
+  display: none;
+}
+
+.dropdown-tambah-role summary:hover {
+  background: var(--color-accent);
+  color: var(--color-ink);
+}
+
+.dropdown-tambah-role-body {
+  padding: 0.5rem 0.6rem;
+  border-top: 1.5px dashed var(--color-rule);
+  background: var(--color-paper);
+}

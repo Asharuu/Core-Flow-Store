@@ -1,4 +1,4 @@
-uts_pbd_026-- 1. TABEL SATUAN
+USE uts_pbd_026;
 INSERT INTO satuan (idsatuan, nama_satuan, status)
 VALUES (1, 'Pcs', 1),
 		 (2, 'Dus', 1),
@@ -8,7 +8,6 @@ VALUES (1, 'Pcs', 1),
 
 SELECT * FROM satuan
 
--- 2. TABEL ROLE (Wajib sebelum user)
 INSERT INTO role (idrole, nama_role)
 VALUES (1, 'Admin'),
 		 (2, 'Staff Pengadaan'),
@@ -18,7 +17,6 @@ VALUES (1, 'Admin'),
 
 SELECT * FROM role
 
--- 3. TABEL USER
 INSERT INTO user (iduser, username, password, idrole)
 VALUES (1, 'admin_utama', 'admin123', 1),
        (2, 'ashar_pengadaan', 'ashar123', 2),
@@ -28,7 +26,6 @@ VALUES (1, 'admin_utama', 'admin123', 1),
 
 SELECT * FROM user
 
--- 4. TABEL VENDOR
 INSERT INTO vendor (idvendor, nama_vendor, badan_hukum, status)
 VALUES (1, 'PT Snack Jaya', 'P', 'A'),
        (2, 'PT Grosir Indah', 'P', 'A'),
@@ -38,7 +35,6 @@ VALUES (1, 'PT Snack Jaya', 'P', 'A'),
        
 SELECT * FROM vendor
 
--- 5. TABEL BARANG
 INSERT INTO barang (idbarang, jenis, nama, idsatuan, status, harga)
 VALUES (1, 'M', 'Chiki Ball', 1, 1, 3500),
        (2, 'M', 'Indomie 1 Dus', 2, 1, 120000),
@@ -48,7 +44,6 @@ VALUES (1, 'M', 'Chiki Ball', 1, 1, 3500),
 
 SELECT * FROM barang
 
--- 6. TABEL MARGIN_PENJUALAN
 INSERT INTO margin_penjualan (idmargin_penjualan, created_at, persen, status, iduser, updated_at)
 VALUES (1, '2026-09-01 08:00:00', 10.0, 1, 1, '2026-10-01 08:00:00'),
        (2, '2026-09-01 08:30:00', 12.5, 1, 1, '2026-10-01 08:30:00'),

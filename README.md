@@ -34,9 +34,9 @@ Core-Flow-Store/
 ├── pengadaan.php       # Modul purchase order ke vendor
 ├── penerimaan.php      # Modul verifikasi barang gudang
 ├── kartu-stok.php      # Audit buku mutasi stok
-├── master-barang.php   # Manajemen data produk
-├── master-vendor.php   # Manajemen data vendor
-├── master-margin.php   # Pengaturan skema margin keuntungan
+├── produk.php          # Manajemen data produk (mengonsumsi VIEW v_barang & v_satuan)
+├── vendor.php          # Manajemen data vendor (mengonsumsi VIEW v_vendor)
+├── margin-penjualan.php# Pengaturan margin keuntungan (mengonsumsi VIEW v_margin_penjualan)
 ├── login.php           # Autentikasi pengguna
 ├── tokens.css          # Desain sistem & variabel tema (Carnival-01)
 └── styles.css          # Gaya visual antarmuka

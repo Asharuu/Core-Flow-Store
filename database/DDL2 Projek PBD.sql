@@ -1,31 +1,27 @@
 USE uts_pbd_026;
 
--- 1. View tabel satuan
-CREATE OR REPLACE VIEW v_satuan AS
-SELECT idsatuan, nama_satuan, status
+CREATE OR REPLACE VIEW v_satuan
+AS SELECT idsatuan AS id, nama_satuan AS nama, status
 FROM satuan;
 
--- 2. View tabel vendor
 CREATE OR REPLACE VIEW v_vendor AS
-SELECT idvendor, nama_vendor, badan_hukum, status
+SELECT idvendor AS id, nama_vendor AS nama, badan_hukum, status
 FROM vendor;
 
--- 3. View tabel role
 CREATE OR REPLACE VIEW v_role AS
-SELECT idrole, nama_role
+SELECT idrole AS id, nama_role AS nama
 FROM role;
 
--- 4. View tabel user
 CREATE OR REPLACE VIEW v_user AS
-SELECT iduser, username, password, idrole
+SELECT iduser AS id, username AS 'nama user', password, idrole AS 'id role'
 FROM user;
 
--- 5. View tabel barang
 CREATE OR REPLACE VIEW v_barang AS
-SELECT idbarang, jenis, nama, idsatuan, status, harga
+SELECT idbarang AS id, jenis, nama, idsatuan 'id satuan', status, harga
 FROM barang;
 
--- 6. View tabel margin_penjualan
 CREATE OR REPLACE VIEW v_margin_penjualan AS
-SELECT idmargin_penjualan, created_at, persen, status, iduser, updated_at
+SELECT idmargin_penjualan AS id, created_at AS 'Dibuat pada', persen, status, iduser 'id user', updated_at AS 'Diperbarui pada'
 FROM margin_penjualan;
+
+SELECT * FROM v_satuan;

@@ -48,14 +48,6 @@ $currentPage = basename($_SERVER['PHP_SELF']);
           </div>
         </div>
 
-        <select class="role-switcher-select" onchange="window.location.href='switch-role.php?role=' + encodeURIComponent(this.value) + '&redirect=' + encodeURIComponent(window.location.pathname)" title="Beralih peran pengujian">
-          <option value="Admin" <?= $currentRole === 'Admin' ? 'selected' : '' ?>>Peran: Admin</option>
-          <option value="Staff Pengadaan" <?= $currentRole === 'Staff Pengadaan' ? 'selected' : '' ?>>Peran: Pengadaan</option>
-          <option value="Staff Gudang" <?= $currentRole === 'Staff Gudang' ? 'selected' : '' ?>>Peran: Gudang</option>
-          <option value="Kasir" <?= $currentRole === 'Kasir' ? 'selected' : '' ?>>Peran: Kasir</option>
-          <option value="Supervisor" <?= $currentRole === 'Supervisor' ? 'selected' : '' ?>>Peran: Supervisor</option>
-        </select>
-
         <a href="logout.php" class="btn btn-sm btn-secondary" style="font-size: 0.85rem;" title="Keluar dari akun">
           Keluar
         </a>
