@@ -1,5 +1,5 @@
 <?php
-$pageTitle = 'Pengadaan Barang (PO)';
+$pageTitle = 'Pengadaan Barang';
 require_once __DIR__ . '/config/database.php';
 
 $success = '';
@@ -32,10 +32,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             $stmtDet->execute([$iddetail, $harga, $jumlah, $subtotal, $barang_id, $idpengadaan]);
 
             $pdo->commit();
-            $success = "Purchase Order #{$idpengadaan} berhasil diterbitkan dan siap dikirim ke vendor!";
+            $success = "Pengadaan #{$idpengadaan} berhasil diterbitkan dan siap dikirim ke vendor!";
         } catch (Exception $e) {
             $pdo->rollBack();
-            $error = 'Gagal membuat PO pengadaan: ' . $e->getMessage();
+            $error = 'Gagal membuat pengadaan: ' . $e->getMessage();
         }
     }
 }
@@ -53,14 +53,14 @@ if (isset($_GET['batalkan'])) {
                 $pdo->prepare("DELETE FROM detail_pengadaan WHERE idpengadaan = ?")->execute([$idPoBatal]);
                 $pdo->prepare("DELETE FROM pengadaan WHERE idpengadaan = ?")->execute([$idPoBatal]);
                 $pdo->commit();
-                $success = "PO #{$idPoBatal} yang masih pending berhasil dibatalkan dan dihapus!";
+                $success = "Pengadaan #{$idPoBatal} yang masih pending berhasil dibatalkan dan dihapus!";
             } else {
                 $pdo->rollBack();
-                $error = "PO #{$idPoBatal} sudah diterima di gudang (status S) dan tidak boleh dibatalkan!";
+                $error = "Pengadaan #{$idPoBatal} sudah diterima di gudang (status S) dan tidak boleh dibatalkan!";
             }
         } catch (Exception $e) {
             $pdo->rollBack();
-            $error = 'Gagal membatalkan PO: ' . $e->getMessage();
+            $error = 'Gagal membatalkan pengadaan: ' . $e->getMessage();
         }
     }
 }
@@ -89,7 +89,7 @@ $preselectedBarang = (int)($_GET['idbarang'] ?? ($barangs[0]['idbarang'] ?? 0));
 <div class="c-card-header" style="margin-bottom: var(--space-md);">
   <div>
     <div class="mono" style="color: var(--color-accent-2); font-size: 0.75rem;">PENGADAAN &amp; PASOKAN BARANG</div>
-    <h1 class="dsp" style="font-size: 2.2rem; margin: 0;">Purchase Order ke Vendor</h1>
+    <h1 class="dsp" style="font-size: 2.2rem; margin: 0;">Pengadaan Barang ke Vendor</h1>
   </div>
   <span class="mono badge badge-inflow">Petugas: <?= htmlspecialchars($currentUser['username']) ?></span>
 </div>
@@ -107,7 +107,7 @@ $preselectedBarang = (int)($_GET['idbarang'] ?? ($barangs[0]['idbarang'] ?? 0));
 <?php endif; ?>
 
 <div class="c-card" style="margin-bottom: var(--space-xl); background: var(--color-paper-2);">
-  <h2 class="c-card-title" style="margin-bottom: var(--space-md);">Terbitkan Purchase Order (PO) Baru</h2>
+  <h2 class="c-card-title" style="margin-bottom: var(--space-md);">Buat Pengadaan Barang Baru</h2>
 
   <form method="POST" action="pengadaan.php">
     <input type="hidden" name="action" value="create_po">
@@ -147,21 +147,21 @@ $preselectedBarang = (int)($_GET['idbarang'] ?? ($barangs[0]['idbarang'] ?? 0));
     </div>
 
     <button type="submit" class="btn btn-primary" style="margin-top: var(--space-sm);">
-      Terbitkan Purchase Order &rarr;
+      Simpan Pengadaan &rarr;
     </button>
   </form>
 </div>
 
 <div class="c-card">
   <div class="c-card-header">
-    <h2 class="c-card-title">Riwayat Transaksi Purchase Order</h2>
+    <h2 class="c-card-title">Riwayat Transaksi Pengadaan</h2>
     <span class="mono badge badge-active"><?= count($poList) ?> Transaksi</span>
   </div>
   <div class="table-responsive">
     <table class="c-table">
       <thead>
         <tr>
-          <th>ID PO</th>
+          <th>ID Pengadaan</th>
           <th>Tanggal</th>
           <th>Vendor</th>
           <th>Rincian Barang</th>
@@ -172,7 +172,7 @@ $preselectedBarang = (int)($_GET['idbarang'] ?? ($barangs[0]['idbarang'] ?? 0));
       </thead>
       <tbody>
         <?php if (empty($poList)): ?>
-          <tr><td colspan="7" style="text-align:center; padding:1.5rem;">Belum ada riwayat PO pengadaan.</td></tr>
+          <tr><td colspan="7" style="text-align:center; padding:1.5rem;">Belum ada riwayat transaksi pengadaan.</td></tr>
         <?php else: ?>
           <?php foreach ($poList as $po): ?>
             <tr>
@@ -191,7 +191,7 @@ $preselectedBarang = (int)($_GET['idbarang'] ?? ($barangs[0]['idbarang'] ?? 0));
                   <a href="penerimaan.php?terima=<?= $po['idpengadaan'] ?>" class="btn btn-sm btn-secondary" title="Terima Barang di Gudang">
                     Terima Barang &rarr;
                   </a>
-                  <a href="pengadaan.php?batalkan=<?= $po['idpengadaan'] ?>" class="btn btn-sm btn-danger" style="margin-left:0.25rem;" onclick="return confirm('Batalkan dan hapus PO #<?= $po['idpengadaan'] ?>?')" title="Batalkan PO">
+                  <a href="pengadaan.php?batalkan=<?= $po['idpengadaan'] ?>" class="btn btn-sm btn-danger" style="margin-left:0.25rem;" onclick="return confirm('Batalkan dan hapus Pengadaan #<?= $po['idpengadaan'] ?>?')" title="Batalkan Pengadaan">
                     Batal
                   </a>
                 <?php else: ?>

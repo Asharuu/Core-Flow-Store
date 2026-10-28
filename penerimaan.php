@@ -19,7 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             $po = $check->fetch();
 
             if (!$po) {
-                throw new Exception("PO #{$idpengadaan} sudah selesai diproses atau tidak ditemukan.");
+                throw new Exception("Pengadaan #{$idpengadaan} sudah selesai diproses atau tidak ditemukan.");
             }
 
             $detPoStmt = $pdo->prepare("SELECT * FROM detail_pengadaan WHERE idpengadaan = ?");
@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             }
 
             $pdo->commit();
-            $success = "Penerimaan PO #{$idpengadaan} berhasil diverifikasi! Stok fisik gudang telah bertambah dan dicatat di Kartu Stok.";
+            $success = "Penerimaan Pengadaan #{$idpengadaan} berhasil diverifikasi! Stok fisik gudang telah bertambah dan dicatat di Kartu Stok.";
         } catch (Exception $e) {
             $pdo->rollBack();
             $error = 'Gagal memproses penerimaan: ' . $e->getMessage();
@@ -63,18 +63,10 @@ $autoSelectId = (int)($_GET['terima'] ?? 0);
 include __DIR__ . '/includes/header.php';
 include __DIR__ . '/includes/sidebar.php';
 
-$pendingPOs = $pdo->query("
-    SELECT p.*, v.nama_vendor, u.username,
-           d.jumlah, d.harga_satuan, b.nama AS nama_barang, s.nama_satuan
-    FROM pengadaan p
-    LEFT JOIN vendor v ON p.vendor_idvendor = v.idvendor
-    LEFT JOIN user u ON p.user_iduser = u.iduser
-    LEFT JOIN detail_pengadaan d ON p.idpengadaan = d.idpengadaan
-    LEFT JOIN barang b ON d.idbarang = b.idbarang
-    LEFT JOIN satuan s ON b.idsatuan = s.idsatuan
-    WHERE p.status = 'P'
-    ORDER BY p.idpengadaan ASC
-")->fetchAll();
+$stmtPending = $pdo->prepare("CALL sp_pengadaan_status('P')");
+$stmtPending->execute();
+$pendingPOs = $stmtPending->fetchAll();
+$stmtPending->closeCursor();
 
 $receivedHistory = $pdo->query("
     SELECT r.*, p.idpengadaan, v.nama_vendor, u.username
@@ -114,14 +106,14 @@ $receivedHistory = $pdo->query("
   <?php if (empty($pendingPOs)): ?>
     <div style="text-align: center; padding: 2.5rem; color: var(--color-muted);">
       <div class="dsp" style="font-size: 1.5rem; margin-bottom: 0.4rem;">Semua Pengiriman Sudah Diterima</div>
-      <p style="margin: 0; font-size: var(--text-sm);">Tidak ada antrean pesanan pembelian yang menunggu verifikasi di gudang.</p>
+      <p style="margin: 0; font-size: var(--text-sm);">Tidak ada antrean pengadaan barang yang menunggu verifikasi di gudang.</p>
     </div>
   <?php else: ?>
     <div class="table-responsive">
       <table class="c-table">
         <thead>
           <tr>
-            <th>ID PO</th>
+            <th>ID Pengadaan</th>
             <th>Tanggal Pesan</th>
             <th>Vendor Rekanan</th>
             <th>Rincian Barang</th>
@@ -169,7 +161,7 @@ $receivedHistory = $pdo->query("
         <tr>
           <th>ID Terima</th>
           <th>Waktu Penerimaan</th>
-          <th>ID PO</th>
+          <th>ID Pengadaan</th>
           <th>Vendor</th>
           <th>Petugas Penerima</th>
           <th>Status Dokumen</th>

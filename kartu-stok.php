@@ -7,28 +7,37 @@ include __DIR__ . '/includes/sidebar.php';
 $filterBarang = (int)($_GET['idbarang'] ?? 0);
 $filterJenis  = trim($_GET['jenis'] ?? '');
 
-$sql = "
-    SELECT k.*, b.nama AS nama_barang, s.nama_satuan
-    FROM kartu_stok k
-    LEFT JOIN barang b ON k.idbarang = b.idbarang
-    LEFT JOIN satuan s ON b.idsatuan = s.idsatuan
-    WHERE 1=1
-";
-$params = [];
-
 if ($filterBarang > 0) {
-    $sql .= " AND k.idbarang = ?";
-    $params[] = $filterBarang;
-}
-if ($filterJenis !== '') {
-    $sql .= " AND k.jenis_transaksi = ?";
-    $params[] = $filterJenis;
-}
+    $stmt = $pdo->prepare("CALL sp_kartu_stok_barang(?)");
+    $stmt->execute([$filterBarang]);
+    $logs = $stmt->fetchAll();
+    $stmt->closeCursor();
 
-$sql .= " ORDER BY k.idkartu_stok DESC LIMIT 100";
-$stmt = $pdo->prepare($sql);
-$stmt->execute($params);
-$logs = $stmt->fetchAll();
+    if ($filterJenis !== '') {
+        $logs = array_values(array_filter($logs, function ($row) use ($filterJenis) {
+            return $row['jenis_transaksi'] === $filterJenis;
+        }));
+    }
+} else {
+    $sql = "
+        SELECT k.*, b.nama AS nama_barang, s.nama_satuan
+        FROM kartu_stok k
+        LEFT JOIN barang b ON k.idbarang = b.idbarang
+        LEFT JOIN satuan s ON b.idsatuan = s.idsatuan
+        WHERE 1=1
+    ";
+    $params = [];
+
+    if ($filterJenis !== '') {
+        $sql .= " AND k.jenis_transaksi = ?";
+        $params[] = $filterJenis;
+    }
+
+    $sql .= " ORDER BY k.idkartu_stok DESC LIMIT 100";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute($params);
+    $logs = $stmt->fetchAll();
+}
 
 $barangOptions = $pdo->query("SELECT idbarang, nama FROM barang ORDER BY nama ASC")->fetchAll();
 ?>

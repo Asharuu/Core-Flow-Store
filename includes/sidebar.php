@@ -28,7 +28,7 @@ $menus = [
     ],
     [
         'file'  => 'pengadaan.php',
-        'label' => 'Pengadaan (PO)',
+        'label' => 'Pengadaan Barang',
         'icon'  => '🚚',
         'roles' => ['Admin', 'Staff Pengadaan', 'Supervisor']
     ],
