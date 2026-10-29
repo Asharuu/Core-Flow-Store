@@ -79,7 +79,7 @@ $satuanList = $pdo->query("SELECT id, nama, status
 $barangList = $pdo->query("
     SELECT vb.id AS idbarang, vb.jenis, vb.nama, vb.`id satuan` AS idsatuan, vb.status, vb.harga,
            vs.nama AS nama_satuan,
-           COALESCE((SELECT stock FROM kartu_stok WHERE idbarang = vb.id ORDER BY idkartu_stok DESC LIMIT 1), 0) AS cur_stock
+           fn_cek_stok(vb.id) AS cur_stock
     FROM v_barang vb
     LEFT JOIN v_satuan vs ON vb.`id satuan` = vs.id
     ORDER BY vb.id ASC

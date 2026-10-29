@@ -79,10 +79,17 @@ function getNextId($pdo, $table, $column) {
 }
 
 function getItemCurrentStock($pdo, $idbarang) {
-    $stmt = $pdo->prepare("SELECT stock FROM kartu_stok WHERE idbarang = ? ORDER BY idkartu_stok DESC LIMIT 1");
+    $stmt = $pdo->prepare("SELECT fn_cek_stok(?)");
     $stmt->execute([$idbarang]);
     $res = $stmt->fetchColumn();
     return ($res !== false) ? (int)$res : 0;
+}
+
+function hitungPpn($pdo, $subtotal) {
+    $stmt = $pdo->prepare("SELECT fn_hitung_ppn(?)");
+    $stmt->execute([(int)$subtotal]);
+    $res = $stmt->fetchColumn();
+    return ($res !== false) ? (int)$res : (int)round($subtotal * 0.11);
 }
 
 function getActiveMargin($pdo) {

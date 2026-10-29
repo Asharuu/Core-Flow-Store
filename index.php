@@ -17,7 +17,7 @@ $activeMargin = getActiveMargin($pdo);
 
 $barangStmt = $pdo->query("
     SELECT b.*, s.nama_satuan,
-           COALESCE((SELECT stock FROM kartu_stok WHERE idbarang = b.idbarang ORDER BY idkartu_stok DESC LIMIT 1), 0) AS cur_stock
+           fn_cek_stok(b.idbarang) AS cur_stock
     FROM barang b
     LEFT JOIN satuan s ON b.idsatuan = s.idsatuan
     ORDER BY b.idbarang ASC

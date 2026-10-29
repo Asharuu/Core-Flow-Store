@@ -52,7 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
 
             $marginNominal = (int) round($subtotalBase * ($persenMargin / 100));
             $subtotalWithMargin = $subtotalBase + $marginNominal;
-            $ppn = (int) round($subtotalWithMargin * 0.11);
+            $ppn = hitungPpn($pdo, $subtotalWithMargin);
             $grandTotal = $subtotalWithMargin + $ppn;
 
             $idpenjualan = getNextId($pdo, 'penjualan', 'idpenjualan');
@@ -101,7 +101,7 @@ include __DIR__ . '/includes/sidebar.php';
 
 $barangList = $pdo->query("
     SELECT b.*, s.nama_satuan,
-           COALESCE((SELECT stock FROM kartu_stok WHERE idbarang = b.idbarang ORDER BY idkartu_stok DESC LIMIT 1), 0) AS cur_stock
+           fn_cek_stok(b.idbarang) AS cur_stock
     FROM barang b
     LEFT JOIN satuan s ON b.idsatuan = s.idsatuan
     ORDER BY b.nama ASC

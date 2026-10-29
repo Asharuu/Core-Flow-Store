@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             $pdo->beginTransaction();
 
             $subtotal = $jumlah * $harga;
-            $ppn = (int) round($subtotal * 0.11);
+            $ppn = hitungPpn($pdo, $subtotal);
             $total = $subtotal + $ppn;
 
             $idpengadaan = getNextId($pdo, 'pengadaan', 'idpengadaan');
