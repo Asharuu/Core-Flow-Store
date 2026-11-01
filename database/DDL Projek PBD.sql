@@ -1,6 +1,5 @@
 USE uts_pbd_026;
 
--- 1. Tabel satuan
 CREATE TABLE satuan (
     idsatuan INT,
     nama_satuan VARCHAR(45),
@@ -8,7 +7,6 @@ CREATE TABLE satuan (
     PRIMARY KEY (idsatuan)
 );
 
--- 2. Tabel vendor
 CREATE TABLE vendor (
     idvendor INT,
     nama_vendor VARCHAR(100),
@@ -17,14 +15,12 @@ CREATE TABLE vendor (
     PRIMARY KEY (idvendor)
 );
 
--- 3. Tabel role
 CREATE TABLE role (
     idrole INT,
     nama_role VARCHAR(100),
     PRIMARY KEY (idrole)
 );
 
--- 4. Tabel user
 CREATE TABLE user (
     iduser INT,
     username VARCHAR(45),
@@ -34,7 +30,6 @@ CREATE TABLE user (
     FOREIGN KEY (idrole) REFERENCES role (idrole)
 );
 
--- 5. Tabel barang
 CREATE TABLE barang (
     idbarang INT,
     jenis CHAR(1),
@@ -46,7 +41,6 @@ CREATE TABLE barang (
     FOREIGN KEY (idsatuan) REFERENCES satuan (idsatuan)
 );
 
--- 6. Tabel kartu_stok
 CREATE TABLE kartu_stok (
     idkartu_stok INT,
     jenis_transaksi CHAR(1),
@@ -63,7 +57,6 @@ CREATE TABLE kartu_stok (
 ALTER TABLE kartu_stok
 	MODIFY idkartu_stok INT;
 
--- 7. Tabel margin_penjualan
 CREATE TABLE margin_penjualan (
     idmargin_penjualan INT,
     created_at TIMESTAMP,
@@ -75,7 +68,6 @@ CREATE TABLE margin_penjualan (
     FOREIGN KEY (iduser) REFERENCES user (iduser)
 );
 
--- 8. Tabel pengadaan
 CREATE TABLE pengadaan (
     idpengadaan BIGINT,
     timestamp TIMESTAMP,
@@ -90,7 +82,6 @@ CREATE TABLE pengadaan (
     FOREIGN KEY (vendor_idvendor) REFERENCES vendor (idvendor)
 );
 
--- 9. Tabel detail_pengadaan
 CREATE TABLE detail_pengadaan (
     iddetail_pengadaan BIGINT,
     harga_satuan INT,
@@ -103,7 +94,6 @@ CREATE TABLE detail_pengadaan (
     FOREIGN KEY (idpengadaan) REFERENCES pengadaan (idpengadaan)
 );
 
--- 10. Tabel penerimaan
 CREATE TABLE penerimaan (
     idpenerimaan BIGINT,
     created_at TIMESTAMP,
@@ -115,7 +105,6 @@ CREATE TABLE penerimaan (
     FOREIGN KEY (iduser) REFERENCES user (iduser)
 );
 
--- 11. Tabel detail_penerimaan
 CREATE TABLE detail_penerimaan (
     iddetail_penerimaan BIGINT,
     idpenerimaan BIGINT,
@@ -128,7 +117,6 @@ CREATE TABLE detail_penerimaan (
     FOREIGN KEY (barang_idbarang) REFERENCES barang (idbarang)
 );
 
--- 12. Tabel retur
 CREATE TABLE retur (
     idretur BIGINT,
     created_at TIMESTAMP,
@@ -141,7 +129,6 @@ CREATE TABLE retur (
     FOREIGN KEY (iduser) REFERENCES user (iduser)
 );
 
--- 13. Tabel detail_retur
 CREATE TABLE detail_retur (
     iddetail_retur INT,
     jumlah INT,
@@ -153,7 +140,6 @@ CREATE TABLE detail_retur (
     FOREIGN KEY (iddetail_penerimaan) REFERENCES detail_penerimaan (iddetail_penerimaan)
 );
 
--- 14. Tabel penjualan
 CREATE TABLE penjualan (
     idpenjualan INT,
     created_at TIMESTAMP,
@@ -167,7 +153,6 @@ CREATE TABLE penjualan (
     FOREIGN KEY (idmargin_penjualan) REFERENCES margin_penjualan (idmargin_penjualan)
 );
 
--- 15. Tabel detail_penjualan
 CREATE TABLE detail_penjualan (
     iddetail_penjualan BIGINT,
     harga_satuan INT,

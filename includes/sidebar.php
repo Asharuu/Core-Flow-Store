@@ -39,6 +39,12 @@ $menus = [
         'roles' => ['Admin', 'Staff Gudang']
     ],
     [
+        'file'  => 'retur.php',
+        'label' => 'Retur Barang',
+        'icon'  => '↩️',
+        'roles' => ['Admin', 'Staff Gudang', 'Staff Pengadaan', 'Supervisor']
+    ],
+    [
         'file'  => 'kartu-stok.php',
         'label' => 'Buku Kartu Stok',
         'icon'  => '📋',
@@ -80,7 +86,6 @@ $menus = [
     <?php endif; ?>
   <?php endforeach; ?>
 
-  <!-- Menu Ganti Role & Dropdown Tambah Role (Kiri Bawah) -->
   <div class="sidebar-role-panel">
     <div class="sidebar-title" style="margin-top: 0; padding-left: 0; border-bottom: none;">
       Ganti Peran (Role)

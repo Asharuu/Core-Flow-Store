@@ -118,7 +118,7 @@ $preselectedBarang = (int)($_GET['idbarang'] ?? ($barangs[0]['idbarang'] ?? 0));
         <select name="vendor_id" class="form-control" required>
           <?php foreach ($vendors as $v): ?>
             <option value="<?= $v['idvendor'] ?>">
-              <?= htmlspecialchars($v['nama_vendor']) ?> (<?= $v['badan_hukum'] === 'P' ? 'PT' : 'CV' ?>)
+              <?= htmlspecialchars($v['nama_vendor']) ?> (<?= $v['badan_hukum'] === 'P' ? 'PT' : ($v['badan_hukum'] === 'C' ? 'CV' : 'UD') ?>)
             </option>
           <?php endforeach; ?>
         </select>

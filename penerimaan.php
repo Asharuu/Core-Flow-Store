@@ -35,18 +35,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             $pdo->prepare("UPDATE pengadaan SET status = 'S' WHERE idpengadaan = ?")->execute([$idpengadaan]);
 
             $stmtDetTerima = $pdo->prepare("INSERT INTO detail_penerimaan (iddetail_penerimaan, idpenerimaan, barang_idbarang, jumlah_terima, harga_satuan_terima, sub_total_terima) VALUES (?, ?, ?, ?, ?, ?)");
-            $stmtKartu = $pdo->prepare("INSERT INTO kartu_stok (idkartu_stok, jenis_transaksi, masuk, keluar, stock, created_at, idtransaksi, idbarang) VALUES (?, 'M', ?, 0, ?, NOW(), ?, ?)");
 
             $detTerimaId = getNextId($pdo, 'detail_penerimaan', 'iddetail_penerimaan');
-            $kartuId = getNextId($pdo, 'kartu_stok', 'idkartu_stok');
 
             foreach ($details as $it) {
                 $stmtDetTerima->execute([$detTerimaId++, $idpenerimaan, $it['idbarang'], $it['jumlah'], $it['harga_satuan'], $it['sub_total']]);
-
-                $currentStock = getItemCurrentStock($pdo, $it['idbarang']);
-                $newStock = $currentStock + (int)$it['jumlah'];
-
-                $stmtKartu->execute([$kartuId++, $it['jumlah'], $newStock, $idpenerimaan, $it['idbarang']]);
             }
 
             $pdo->commit();
@@ -165,11 +158,12 @@ $receivedHistory = $pdo->query("
           <th>Vendor</th>
           <th>Petugas Penerima</th>
           <th>Status Dokumen</th>
+          <th style="text-align:center;">Tindakan</th>
         </tr>
       </thead>
       <tbody>
         <?php if (empty($receivedHistory)): ?>
-          <tr><td colspan="6" style="text-align:center; padding:1.2rem;">Belum ada riwayat penerimaan barang.</td></tr>
+          <tr><td colspan="7" style="text-align:center; padding:1.2rem;">Belum ada riwayat penerimaan barang.</td></tr>
         <?php else: ?>
           <?php foreach ($receivedHistory as $rh): ?>
             <tr>
@@ -179,6 +173,11 @@ $receivedHistory = $pdo->query("
               <td><strong><?= htmlspecialchars($rh['nama_vendor'] ?? '-') ?></strong></td>
               <td class="mono"><?= htmlspecialchars($rh['username'] ?? '-') ?></td>
               <td><span class="mono badge badge-inflow">✓ Diterima</span></td>
+              <td style="text-align:center;">
+                <a href="retur.php?idpenerimaan=<?= $rh['idpenerimaan'] ?>" class="btn btn-sm btn-secondary">
+                  Retur Barang
+                </a>
+              </td>
             </tr>
           <?php endforeach; ?>
         <?php endif; ?>

@@ -8,7 +8,6 @@ if (session_status() === PHP_SESSION_NONE) {
 $role = trim($_GET['role'] ?? 'Admin');
 $redirect = $_GET['redirect'] ?? 'index.php';
 
-// Bersihkan parameter status lama dari URL redirect
 $redirect = preg_replace('/([?&])role_status=[^&]*(&|$)/', '$1', $redirect);
 $redirect = preg_replace('/([?&])role_name=[^&]*(&|$)/', '$1', $redirect);
 $redirect = preg_replace('/([?&])role_err=[^&]*(&|$)/', '$1', $redirect);
@@ -29,7 +28,6 @@ if (isset($roleMapping[$role])) {
     $_SESSION['user'] = $roleMapping[$role];
     $_SESSION['role'] = $role;
 } else {
-    // Cari role dinamis di database
     try {
         $stmtRole = $pdo->prepare("SELECT idrole, nama_role FROM role WHERE nama_role = ?");
         $stmtRole->execute([$role]);
@@ -57,13 +55,12 @@ if (isset($roleMapping[$role])) {
             $_SESSION['user'] = [
                 'iduser'    => $userData['iduser'],
                 'username'  => $userData['username'],
-                'idrole'    => $roleData['idrole'],
+                'idrole'    => $userData['idrole'],
                 'role_name' => $roleData['nama_role']
             ];
             $_SESSION['role'] = $roleData['nama_role'];
         }
     } catch (Exception $e) {
-        // Fallback jika query gagal
     }
 }
 

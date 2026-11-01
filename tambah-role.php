@@ -9,7 +9,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $namaRole = trim($_POST['nama_role'] ?? '');
     $redirect = $_POST['redirect'] ?? 'index.php';
 
-    // Bersihkan parameter status lama agar tidak menumpuk di URL
     $redirect = preg_replace('/([?&])role_status=[^&]*(&|$)/', '$1', $redirect);
     $redirect = preg_replace('/([?&])role_name=[^&]*(&|$)/', '$1', $redirect);
     $redirect = preg_replace('/([?&])role_err=[^&]*(&|$)/', '$1', $redirect);
@@ -18,7 +17,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($namaRole !== '') {
         try {
-            // Cek apakah nama role sudah ada (case-insensitive)
             $stmtCek = $pdo->prepare("SELECT idrole, nama_role FROM role WHERE LOWER(nama_role) = LOWER(?)");
             $stmtCek->execute([$namaRole]);
             $existing = $stmtCek->fetch();
@@ -28,12 +26,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 exit;
             }
 
-            // Dapatkan ID berikutnya dan simpan ke tabel role
             $idrole = getNextId($pdo, 'role', 'idrole');
             $stmt = $pdo->prepare("INSERT INTO role (idrole, nama_role) VALUES (?, ?)");
             $stmt->execute([$idrole, $namaRole]);
 
-            // Buat akun user demo otomatis agar role langsung bisa diuji coba
             $iduser = getNextId($pdo, 'user', 'iduser');
             $baseUser = strtolower(preg_replace('/[^a-zA-Z0-9]/', '_', $namaRole));
             $baseUser = trim($baseUser, '_');
@@ -52,7 +48,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmtUser = $pdo->prepare("INSERT INTO user (iduser, username, password, idrole) VALUES (?, ?, ?, ?)");
             $stmtUser->execute([$iduser, $username, $password, $idrole]);
 
-            // Beralih sesi ke role baru yang baru saja dibuat
             $_SESSION['user'] = [
                 'iduser'    => $iduser,
                 'username'  => $username,

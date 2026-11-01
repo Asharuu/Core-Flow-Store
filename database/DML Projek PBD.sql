@@ -30,8 +30,8 @@ INSERT INTO vendor (idvendor, nama_vendor, badan_hukum, status)
 VALUES (1, 'PT Snack Jaya', 'P', 'A'),
        (2, 'PT Grosir Indah', 'P', 'A'),
        (3, 'PT Perbotolan', 'P', 'A'),
-       (4, 'PT Pokemon', 'P', 'A'),
-       (5, 'PT Sembako', 'P', 'A');
+       (4, 'CV Pokemon', 'C', 'A'),
+       (5, 'UD Sembako', 'U', 'A');
        
 SELECT * FROM vendor
 

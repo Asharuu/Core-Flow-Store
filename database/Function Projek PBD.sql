@@ -1,6 +1,5 @@
 USE uts_pbd_026;
 
--- 1. Function untuk mengecek sisa stok terakhir barang dari kartu_stok
 DELIMITER $$
 CREATE FUNCTION fn_cek_stok(p_idbarang int)
 RETURNS int
@@ -20,8 +19,6 @@ DELIMITER ;
 SELECT idbarang, nama, fn_cek_stok(idbarang) AS sisa_stok
 FROM barang;
 
-
--- 2. Function untuk menghitung nilai PPN (11%) dari subtotal transaksi
 DELIMITER $$
 CREATE FUNCTION fn_hitung_ppn(p_subtotal int)
 RETURNS int

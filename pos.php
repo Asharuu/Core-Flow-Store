@@ -62,18 +62,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
             $stmtPj->execute([$idpenjualan, $subtotalBase, $ppn, $grandTotal, $iduser, $idmargin]);
 
             $detStmt = $pdo->prepare("INSERT INTO detail_penjualan (iddetail_penjualan, harga_satuan, jumlah, subtotal, penjualan_idpenjualan, idbarang) VALUES (?, ?, ?, ?, ?, ?)");
-            $kartuStmt = $pdo->prepare("INSERT INTO kartu_stok (idkartu_stok, jenis_transaksi, masuk, keluar, stock, created_at, idtransaksi, idbarang) VALUES (?, 'K', 0, ?, ?, NOW(), ?, ?)");
 
             $detId = getNextId($pdo, 'detail_penjualan', 'iddetail_penjualan');
-            $kartuId = getNextId($pdo, 'kartu_stok', 'idkartu_stok');
 
             foreach ($receiptItems as $it) {
                 $detStmt->execute([$detId++, $it['harga'], $it['qty'], $it['subtotal'], $idpenjualan, $it['idbarang']]);
-
-                $lastStock = getItemCurrentStock($pdo, $it['idbarang']);
-                $newStock = max(0, $lastStock - $it['qty']);
-
-                $kartuStmt->execute([$kartuId++, $it['qty'], $newStock, $idpenjualan, $it['idbarang']]);
             }
 
             $pdo->commit();

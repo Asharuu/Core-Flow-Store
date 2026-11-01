@@ -67,9 +67,10 @@ $barangOptions = $pdo->query("SELECT idbarang, nama FROM barang ORDER BY nama AS
     <div class="form-group" style="margin:0; width:220px;">
       <label class="form-label">Jenis Mutasi</label>
       <select name="jenis" class="form-control">
-        <option value="">Semua (Masuk &amp; Keluar)</option>
-        <option value="M" <?= $filterJenis === 'M' ? 'selected' : '' ?>>Barang Masuk (Inflow)</option>
-        <option value="K" <?= $filterJenis === 'K' ? 'selected' : '' ?>>Barang Keluar (Outflow)</option>
+        <option value="">Semua Aliran Stok</option>
+        <option value="M" <?= $filterJenis === 'M' ? 'selected' : '' ?>>Barang Masuk (Penerimaan)</option>
+        <option value="K" <?= $filterJenis === 'K' ? 'selected' : '' ?>>Barang Keluar (Penjualan)</option>
+        <option value="R" <?= $filterJenis === 'R' ? 'selected' : '' ?>>Retur ke Vendor</option>
       </select>
     </div>
 
@@ -106,7 +107,7 @@ $barangOptions = $pdo->query("SELECT idbarang, nama FROM barang ORDER BY nama AS
               <td><strong><?= htmlspecialchars($k['nama_barang'] ?? '-') ?></strong></td>
               <td>
                 <span class="mono badge <?= $k['jenis_transaksi'] === 'M' ? 'badge-inflow' : 'badge-outflow' ?>">
-                  <?= $k['jenis_transaksi'] === 'M' ? 'Masuk' : 'Keluar' ?>
+                  <?= $k['jenis_transaksi'] === 'M' ? 'Masuk' : ($k['jenis_transaksi'] === 'R' ? 'Retur' : 'Keluar') ?>
                 </span>
               </td>
               <td class="mono" style="color:#15803d; font-weight:800;">

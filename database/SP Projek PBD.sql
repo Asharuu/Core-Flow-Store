@@ -1,6 +1,5 @@
 USE uts_pbd_026;
 
--- 1. Stored Procedure menampilkan pengadaan berdasarkan status
 DELIMITER $$
 CREATE PROCEDURE sp_pengadaan_status(p_status CHAR(1))
 BEGIN
@@ -30,8 +29,6 @@ DELIMITER ;
 
 CALL sp_pengadaan_status('P');
 
-
--- 2. Stored Procedure menampilkan kartu stok berdasarkan barang
 DELIMITER $$
 CREATE PROCEDURE sp_kartu_stok_barang(p_idbarang int)
 BEGIN
